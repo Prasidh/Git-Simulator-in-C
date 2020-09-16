@@ -1,0 +1,125 @@
+
+CONFIGURE
+Input:
+configure <172.17.11.207> <12345>
+
+Expected output:
+.configure File with the information saved <length of IP> <ip> <length of port> <port>:
+13:172.17.11.2075:12345
+
+
+CHECKOUT
+Input:
+checkout thanos
+
+Expected output:
+Client will place all files under thanos and rebuild the project directory as well as the manifest.
+thanos/powerstone.txt
+thanos/timestone.txt
+thanos/mindstone.txt
+thanos/spacestone.txt
+thanos/soulstone.txt
+
+
+
+
+CREATE
+Input:
+create thanos
+
+Expected output:
+Server and client creates project folder thanos and initializes a .Manifest with only 1 (starting version num of manifest)
+
+
+
+
+Input:
+destroy thanos
+
+Expected output:
+Destroys the thanos directory on the server
+
+
+ADD
+Input:
+add thanos timestone.txt
+
+Expected output:
+Client adds entry timestone.txt into Manifest with version number of 1 and a unique hash for the contents of the file.
+
+
+
+REMOVE
+Input:
+remove thanos timestone.txt
+
+Expected output:
+Client removes the entry for timestone.txt from the .Manifest file.
+
+
+
+CURRENTVERSION
+Input:
+currentversion thanos
+
+Expected output:
+powerstone.txt 1
+timestone.txt 2
+mindstone.txt 4
+spacestone.txt 2
+soulstone.txt 1
+
+
+
+HISTORY
+Input:
+history thanos
+
+Expected output:
+create
+0
+
+push
+1
+A 1 thanos/timestone.txt mf91203j13912
+
+push
+2
+M 2 thanos/timestone.txt jc812js012392
+
+
+
+ROLLBACK
+Input:
+rollback thanos 2
+
+Expected output:
+Rolls back to the version of the project indicated (2) and deletes all versions between the current and the specified one.
+
+
+UPGRADE
+Input:
+upgrade thanos
+
+Expected Output:
+Enacts the changes in the .Update file. Deletes local version of anything marked with D. Will also send a request to the server for M/A files and
+the .Manifest. The client receives and then rebuilds files. We replace the local .Manifest with the servers and delete the local .Update
+
+
+COMMIT
+Input:
+commit thanos
+
+Expected Output:
+Builds a .Commit file and sends it to the server including files marked with D (files in server but not in client),
+A (files in client but not in server) and U (files in both server and client but client version is higher)
+
+
+PUSH
+Input:
+push thanos
+
+Expected Output:
+Acts on the modes listed in the .Commit file. Will add, delete and update files as listed. In the end it'll delete the .Commit
+
+
